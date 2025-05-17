@@ -29,10 +29,13 @@
 
 
 body {
-  background-image: url("images/back3.jpg"); /* استبدل باسم الصورة أو رابطها */
-    background-size: cover; /* تغطية الشاشة بالكامل */
-    background-repeat: no-repeat; /* عدم تكرار الصورة */
-    background-position: center center; /* توسيط الصورة */
+      min-height: 100vh;
+      background-image: url("images/back3.jpg"); /* استبدل باسم الصورة أو رابطها */
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 0 1%;
+      background-attachment: fixed;
+      margin: 0;
   color: #333;
   transition: background-color 0.3s, color 0.3s;
 }
