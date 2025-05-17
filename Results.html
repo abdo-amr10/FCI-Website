@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exam Results</title>
+  <link rel="icon" href="images/fci.png" type="image/png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+ <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+  <script>
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+      window.location.href = "login.html";
+    }
+  </script>
+  
+  <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #f4f6f9;
+  color: #333;
+}
+
+/* Navbar spacing */
+main {
+  padding: 80px 20px 40px; /* Space from navbar */
+}
+
+/* Page Title */
+.page-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #ffffff;
+  padding-top: 40px; 
+}
+
+/* Layout */
+.dashboard-container {
+  display: flex;
+  max-width: 3200px;
+  margin-right: 10px;
+  gap: 2px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;  /* Arrange content vertically */
+}
+
+/* Student Info */
+.student-info {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 30px; /* Add some space below the student info */
+  flex-shrink: 0;
+  margin-left: 300px;
+}
+
+
+.student-info-content {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.student-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 4px solid #fa7d53;
+  margin-bottom: 40px;
+  margin-left: 20px;
+}
+
+.student-details {
+  flex: 1;
+}
+
+.student-details h2 {
+  margin-left: 20px;
+  margin-bottom: 6px;
+  font-size: 22px;
+  color: #333;
+}
+
+.details-row {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 6px;
+  margin-left: 20px;
+
+}
+
+.details-row p {
+  font-size: 14px;
+  color: #444;
+  margin: 0;
+}
+
+/* Term Block */
+.term-block {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: flex-start;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.term {
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease;
+  width: 100%;
+  /* هنا بنخلي الكونتينر يبعد 3 سم من اليمين والشمال */
+  margin-left: 6cm;
+  margin-right: 7cm;
+
+  /* أو لو عايز تخليه responsive أحسن: */
+  /* margin: 0 auto;
+     width: calc(100% - 6cm); */
+
+}
+
+
+/* Main section */
+.terms-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Term card */
+.term {
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease;
+}
+
+.term h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #2a7faa;
+  border-left: 5px solid #2a7faa;
+  padding-left: 12px;
+}
+
+/* Table Styling */
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  background-color: #fafafa;
+}
+
+.results-table thead {
+  background-color: #2a7faa;
+  color: #fff;
+}
+
+.results-table th,
+.results-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.results-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Totals */
+.totals {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  color: #444;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dashboard-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .student-info,
+  .terms-section {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+body {
+  min-height: 100vh;
+      background-image: url("images/back3.jpg"); /* استبدل باسم الصورة أو رابطها */
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 0 1%;
+      background-attachment: fixed;
+      margin: 0;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  min-height: calc(100vh - 80px); /* space for navbar */
+}
+
+.container {
+  width: 100%;
+  max-width: 370px;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  background-color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+              0 4px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: -10px;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+form input,
+form button {
+  width: 100%;
+}
+
+.container h2 {
+  font-size: 1.7rem;
+  color: #2a7faa;
+  margin-bottom: 0.1rem;
+}
+
+.container p.subtitle {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1.2rem;
+}
+
+.container input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 0.95rem;
+  transition: border 0.2s ease;
+}
+
+.container input:focus {
+  border-color: #2a7faa;
+  outline: none;
+  background-color: #fff;
+}
+
+.container button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #2a7faa;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.15s ease;
+}
+
+.container button:hover {
+  background-color: #206b8f;
+  transform: translateY(-2px);
+}
+
+.error {
+  color: #d00000;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.success {
+  color: #228b22;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+footer {
+  margin-top: 60px;
+  padding: 15px 0;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-color);
+  background-color: rgba(251, 250, 250, 0.972);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+}
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.info-button {
+  display: inline-block;
+  padding: 10px 18px;
+  background-color: #2a7faa;
+  color: #ffffff; /* Dark text for contrast */
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+}
+
+.info-button:hover {
+  background-color: #4675ff; /* Slightly darker gray on hover */
+  transform: translateY(-2px);
+}
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      padding: 0.90rem 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-radius: 10px;
+      width: 98%;
+      box-sizing: border-box;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 15px;
+    }
+
+    header .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    header .logo img {
+      width: 34px;
+      height: 34px;
+    }
+
+    header .logo h2 {
+      font-size: 20px;
+      color: #333;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-right: 2rem;
+      margin-left: auto;
+    }
+
+    .navbar a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      font-size: 14px;
+      color: #333;
+      transition: all 0.3s ease;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .navbar a:hover {
+      background-color: #f3f3f3;
+    }
+
+    .navbar a span {
+      font-size: 18px;
+    }
+
+    .navbar a h3 {
+      margin: 0;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .theme-toggler {
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+
+    .theme-toggler span {
+      font-size: 24px;
+      color: #fffdfd;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 2rem 1rem;
+      }
+      .container h2 {
+        font-size: 1.6rem;
+      }
+    }
+
+    /* إعدادات عامة للأيقونات */
+/* إعدادات عامة للأيقونات */
+.sun-icon,
+.moon-icon {
+  display: none;
+  transition: all 0.3s ease;
+  font-size: 25px;
+}
+
+/* الوضع الداكن (Dark Mode) */
+body.dark {
+  min-height: 100vh;
+      background-image: url("images/back3.jpg"); /* استبدل باسم الصورة أو رابطها */
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 0 1%;
+      background-attachment: fixed;
+      margin: 0;
+  color: #ffffff; /* نص فاتح */
+
+}
+
+/* الخلفية الداكنة للأجزاء المختلفة */
+
+body.dark .student-info,
+
+body.dark .container,
+body.dark .header {
+  background-color: #1e1e2f;
+  color: white;
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 30px; /* Add some space below the student info */
+  flex-shrink: 0;
+  margin-left: 300px;
+}
+body.dark .term{
+  background-color: #1e1e2f;
+  color: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease;
+}
+
+body.dark .results-table{
+  background-color: #1e1e2f;
+  color: white;
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 30px; /* Add some space below the student info */
+  flex-shrink: 0;
+  margin-left: 1px;
+}
+/* تخصيص الهيدر في الوضع الداكن */
+body.dark header {
+  background-color: #1e1e2f;
+    color: #e0e0e0; /* نص فاتح في الهيدر */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); /* ظل داكن خفيف */
+  margin-bottom: 1px; /* إضافة مسافة تحت الهيدر */
+}
+
+/* تباين النصوص في الـ containers */
+body.dark .dashboard-container h2,
+body.dark .student-info h2,
+body.dark .term h2 {
+  color: #ffffff; /* لون خفيف وأنيق للنصوص */
+}
+
+/* تخصيص الأيقونات */
+body.dark .theme-toggler .moon-icon {
+  display: none;
+}
+
+body.dark .theme-toggler .sun-icon {
+  display: inline-block;
+}
+
+/* الأزرار في الوضع الداكن */
+body.dark .container button {
+  background-color: #00bcd4; /* زر بلون جذاب */
+  color: #fff; /* نص الزر فاتح */
+  border: none;
+}
+
+/* تخصيص الروابط في الوضع الداكن */
+body.dark .navbar a {
+  color: #e0e0e0; /* تغيير لون النص في الروابط إلى لون فاتح */
+  background-color: #333; /* خلفية بسيطة للروابط */
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+body.dark .sun-icon {
+  display: none;
+}
+
+body.dark .moon-icon {
+  display: inline-block;
+  color: #f5f5f5; /* لون القمر في الوضع الداكن */
+}
+
+body.dark-mode .moon-icon {
+  color: #fff !important;
+  filter: brightness(1) !important;
+}
+
+
+body.dark .navbar a:hover {
+  background-color: #4e4e4e; /* تفاعل عند التمرير مع خلفية أغمق قليلاً */
+}
+body.dark .theme-toggler .moon-icon {
+  display: inline-block;
+}
+
+body.dark .theme-toggler .sun-icon {
+  display: none;
+}
+/* الوضع النهاري */
+body:not(.dark) .sun-icon {
+  display: inline-block;
+  color: gold;
+  transform: translateY(4px);
+}
+
+body:not(.dark) .moon-icon {
+  display: none;
+}
+
+/* الوضع الليلي */
+body.dark .sun-icon {
+  display: none;
+}
+
+body.dark .moon-icon {
+  display: inline-block;
+  color: #ffffff;
+}
+
+/* الفوتر */
+body.dark footer {
+  background-color: #1f1f1f; /* خلفية داكنة للفوتر */
+  color: #ddd; /* نص فاتح في الفوتر */
+  border-top: 1px solid #333; /* فاصل خفيف */
+}
+
+/* تحديث الأيقونات */
+body.dark .sun-icon {
+  color: #f1c40f; /* لون الشمس في الوضع الداكن */
+}
+
+body.dark .moon-icon {
+  color: #90a4ae; /* لون القمر في الوضع الداكن */
+}
+
+/* تعديل اللوجو ليظهر بشكل دائري */
+body.dark .logo img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%; /* تعيين شكل دائري للوجو */
+}
+
+/* تغيير لون كلمة FCI لتصبح بيضاء */
+body.dark .logo h2 {
+  color: #ffffff; /* تغيير اللون إلى الأبيض */
+}
+
+/* تخصيص الأيقونات */
+body.dark .sun-icon {
+  color: #f1c40f; /* لون الشمس في الوضع الداكن */
+}
+
+body.dark .moon-icon {
+  color: #90a4ae; /* لون القمر في الوضع الداكن */
+}
+
+body.dark .details-row {
+  color: white; /* التأكد أن النص في details-row يبقى أبيض */
+}
+body.dark h1, body.dark h2, body.dark h3 {
+  color: white; /* تغيير لون العناوين */
+}
+body.dark .details-row p {
+  color: white;
+}
+
+/* الفوتر */
+body.dark footer {
+  background-color: #1f1f1f; /* خلفية داكنة للفوتر */
+  color: #ddd; /* نص فاتح في الفوتر */
+  border-top: 1px solid #333; /* فاصل خفيف */
+}
+
+/* الوضع النهاري: الروابط في النافبار */
+body:not(.dark) .navbar a {
+  color: #333; /* نص داكن */
+  background-color: #fff; /* خلفية فاتحة للروابط */
+}
+
+body:not(.dark) .navbar a:hover {
+  background-color: #f1f1f1; /* تأثير hover على الروابط */
+}
+
+
+/* تخصيص الوان تفاعلية لتناسب التباين العالي في الوضع الداكن */
+body.dark .navbar a:hover {
+  background-color: #555; /* زيادة التفاعل عند التمرير */
+}
+
+
+/* تخصيص الخلفية لكل زرار في الوضع الليلي فقط */
+body.dark .navbar a:nth-child(1) {
+  background-color: #2f3e46;
+  color: #ffffff;
+}
+
+body.dark .navbar a:nth-child(2) {
+  background-color: #2f3e46;
+  color: #ffffff;
+}
+
+body.dark .navbar a:nth-child(3) {
+  background-color: #2f3e46;
+  color: #ffffff;
+}
+
+body.dark .navbar a:nth-child(4) {
+  background-color: #2f3e46;
+  color: #ffffff;
+}
+
+body.dark .navbar a:nth-child(5) {
+  background-color: #2f3e46;
+  color: #ffffff;
+}
+
+/* تأثير hover */
+body.dark .navbar a:hover {
+  filter: brightness(1.1);
+}
+
+/* تعديل اللوجو ليظهر بشكل دائري */
+body.dark .logo img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%; /* تعيين شكل دائري للوجو */
+}
+
+/* تغيير لون كلمة FCI لتصبح بيضاء */
+body.dark .logo h2 {
+  color: #ffffff; /* تغيير اللون إلى الأبيض */
+}
+
+/* تفعيل الوضع الداكن للروابط في النافبار */
+body.dark .navbar a {
+  color: #e0e0e0; /* تغيير لون النص في الروابط إلى لون فاتح */
+  background-color: #333; /* خلفية بسيطة للروابط */
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+
+body.dark .moon-icon {
+  color: white !important; /* اللون الأبيض */
+  filter: brightness(1) !important; /* تأكيد أن الأيقونة مش مظلمة */
+}
+
+
+/* تفعيل الوضع الداكن للروابط في النافبار */
+body.dark .navbar a {
+  color: #e0e0e0; /* تغيير لون النص في الروابط إلى لون فاتح */
+  background-color: #333; /* خلفية بسيطة للروابط */
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+
+body.dark .page-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 40px;
+
+  padding-top: 40px; 
+}
+body.dark .totals{
+  color: white;
+}
+body.dark .info-button {
+  color: black;
+}
+/* تأكيد تغيير شكل الأزرار نفسها في الوضع الداكن */
+body.dark .button-row a {
+  background-color: white !important;
+  color: black !important; /* تأكد من أن النص يكون أسود */
+  border: 2px solid black !important; /* إذا كنت عايز حدود على الزرار */
+}
+body.dark footer{
+  background-color: #1e1e2f !important; /* خلفية داكنة لكل العناصر */
+  color: #e0e0e0; /* نص فاتح داخل العناصر الداكنة */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* إضافة الظلال */
+}
+/* إذا كنت عايز تغيير لون النص أثناء التمرير */
+body.dark .button-row a:hover {
+  background-color: #f1f1f1 !important; /* تغيير الخلفية أثناء التمرير */
+  color: black !important; /* تغيير لون النص أثناء التمرير */
+}
+
+  </style>
+</head>
+<body >
+  <header>
+    <div class="logo">
+      <img src="./images/fci.png" alt="Logo">
+      <h2>FCI</h2>
+    </div>
+    <div class="navbar">
+      <a href="index.html">
+        <span class="material-icons-sharp">home</span>
+        <h3>Home</h3>
+      </a>
+      <a href="timetable.html" onclick="timeTableAll()">
+        <span class="material-icons-sharp">today</span>
+        <h3>Time Table</h3>
+      </a>
+      <a href="Results.html">
+        <span class="material-icons-sharp">grid_view</span>
+        <h3>Exam Results</h3>
+      </a>
+      <a href="resetpassword.html">
+        <span class="material-icons-sharp">lock</span>
+        <h3>Change Password</h3>
+      </a>
+      <a href="#" onclick="logout(); return false;">
+        <span class="material-icons-sharp" id="logoutButton">logout</span>
+        <h3>Logout</h3>
+      </a>
+      
+    </div>
+    <div class="theme-toggler" onclick="toggleDarkMode()">
+      <span class="material-icons-sharp moon-icon">dark_mode</span>
+      <span class="material-icons-sharp sun-icon">light_mode</span>
+    </div>
+    
+  
+  </header>
+  <h1 class="page-title">Student Results Overview</h1>
+  <div class="dashboard-container">
+    <div class="student-info">
+      <div class="student-info-content">
+        <img src="images\me.jpg.jpg" alt="Student Photo" class="student-photo">
+        <div class="student-details">
+          <h2>Abd El-Rahman Amr</h2>
+          <div class="details-row">
+            <p><strong>Registered Hours:</strong> 18 hrs</p>
+            <p><strong>Completed Hours:</strong> 54 hrs</p>
+          </div>
+          <div class="details-row">
+            <p><strong>GPA:</strong> 3.52</p>
+            <p><strong>Level:</strong> 2nd Year</p>
+          </div>
+    
+          <!-- Buttons -->
+          <!-- Buttons Row -->
+            <!-- Buttons Row -->
+          <div class="button-row">
+             <a href="timetable.html" class="info-button secondary">🗓️ Register Schedule</a>
+              <a href="index.html" class="info-button secondary">🏠 Home</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    
+    
+
+<!-- Tables and other content below -->
+
+
+  
+    <!-- Terms Section -->
+    <div class="terms-section">
+      <!-- Term 1 -->
+      <div class="term">
+        <h2>Semester 1</h2>
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Code</th>
+              <th>Grade</th>
+              <th>Hours</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Mathematics I</td><td>MTH101</td><td>A</td><td>3</td><td>12</td></tr>
+            <tr><td>Physics I</td><td>PHY101</td><td>B+</td><td>3</td><td>10.5</td></tr>
+            <tr><td>Introduction to CS</td><td>CSC100</td><td>A</td><td>3</td><td>12</td></tr>
+            <tr><td>English</td><td>ENG101</td><td>A-</td><td>3</td><td>7.4</td></tr>
+            <tr><td>Logic</td><td>LOG102</td><td>B</td><td>3</td><td>6</td></tr>
+            <tr><td>Statistics</td><td>STA101</td><td>B+</td><td>3</td><td>10.5</td></tr>
+          </tbody>
+        </table>
+        <div class="totals">
+          <div>Total Hours: 18</div>
+          <div>Term GPA: 3.42</div>
+        </div>
+      </div>
+  
+      <!-- Term 2 -->
+
+      <div class="term">
+        <h2>Semester 2</h2>
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Code</th>
+              <th>Grade</th>
+              <th>Hours</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Mathematics II</td><td>MTH102</td><td>B+</td><td>3</td><td>10.5</td></tr>
+            <tr><td>Physics II</td><td>PHY102</td><td>B</td><td>3</td><td>9</td></tr>
+            <tr><td>Data Structures</td><td>CSC110</td><td>A</td><td>3</td><td>12</td></tr>
+            <tr><td>Technical Writing</td><td>ENG201</td><td>A-</td><td>3</td><td>7.4</td></tr>
+            <tr><td>Discrete Math</td><td>MTH201</td><td>B+</td><td>3</td><td>10.5</td></tr>
+            <tr><td>Electronics</td><td>ELE101</td><td>B</td><td>3</td><td>6</td></tr>
+          </tbody>
+        </table>
+        <div class="totals">
+          <div>Total Hours: 18</div>
+          <div>Term GPA: 3.31</div>
+        </div>
+      </div>
+  
+      <!-- Term 3 -->
+
+      <div class="term">
+        <h2>Semester 3</h2>
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Code</th>
+              <th>Grade</th>
+              <th>Hours</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Modiling & Simulation</td><td>CSC220</td><td>A</td><td>3</td><td>12</td></tr>
+            <tr><td>Programming-2</td><td>CSC210</td><td>A-</td><td>3</td><td>11.1</td></tr>
+            <tr><td>Web Design</td><td>WEB230</td><td>B+</td><td>3</td><td>10.5</td></tr>
+            <tr><td>Operating Systems</td><td>CSC240</td><td>B</td><td>3</td><td>9</td></tr>
+            <tr><td>Network-1</td><td>CSC250</td><td>A</td><td>3</td><td>12</td></tr>
+            <tr><td>Data Structures</td><td>DS301</td><td>A</td><td>3</td><td>8</td></tr>
+          </tbody>
+        </table>
+        <div class="totals">
+          <div>Total Hours: 18</div>
+          <div>Term GPA: 3.68</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <script>
+
+function toggleDarkMode() {
+  document.body.classList.toggle('dark');
+}
+
+if (localStorage.getItem("darkMode") === "enabled") {
+    document.body.classList.add("dark");
+  }
+
+  function toggleDarkMode() {
+    // التبديل بين الوضع الداكن والعادي
+    document.body.classList.toggle("dark");
+
+    // حفظ حالة الوضع في LocalStorage
+    if (document.body.classList.contains("dark")) {
+      localStorage.setItem("darkMode", "enabled");
+    } else {
+      localStorage.removeItem("darkMode");
+    }
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+  // التحقق إذا كان المستخدم قد قام بتسجيل الدخول
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+  window.location.replace("login.html");
+}
+
+
+  // منع الرجوع إلى الصفحة السابقة باستخدام التاريخ
+  if (window.history && window.history.pushState) {
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function () {
+      window.history.pushState(null, null, window.location.href);
+    };
+  }
+});
+
+// دالة لتسجيل الخروج، تقوم بإزالة حالة تسجيل الدخول
+
+
+  function logout() {
+    localStorage.removeItem("isLoggedIn");
+
+    // حذف الكاش عشان الصفحة ما تفضلش محفوظة
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (let name of names)
+          caches.delete(name);
+      });
+    }
+
+    // منع الرجوع بزر back
+    history.pushState(null, null, location.href);
+    window.addEventListener("popstate", function () {
+      history.pushState(null, null, location.href);
+    });
+    localStorage.removeItem("isLoggedIn");
+    window.location.replace("login.html");
+  }
+
+
+
+  document.getElementById("logoutButton").addEventListener("click", logout);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") || sessionStorage.getItem("isLoggedIn");
+    
+    if (!isLoggedIn) {
+      // لو مش مسجل دخول يرجّعه للوج إن
+      window.location.replace("login.html");
+    }
+
+    // منع الرجوع للصفحة دي بزر الرجوع
+    if (window.history && window.history.pushState) {
+      window.history.pushState(null, null, window.location.href);
+      window.onpopstate = function () {
+        window.history.pushState(null, null, window.location.href);
+      };
+    }
+  });
+  document.addEventListener("DOMContentLoaded", function () {
+    // التحقق من تسجيل الدخول
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+      window.location.replace("login.html");
+    }
+
+    // منع الرجوع بزر الباك
+    history.pushState(null, null, location.href);
+    window.addEventListener("popstate", function () {
+      history.pushState(null, null, location.href);
+    });
+  });
+  </script>
+<script>
+  checkAuth(); // نفذ التحقق تلقائيًا عند تحميل الصفحة
+</script>
+<script>  
+  if (!localStorage.getItem("isLoggedIn")) {
+    alert("Not logged in! Redirecting...");
+    console.log("Before clearing:", localStorage.getItem("schedule"));
+localStorage.removeItem("schedule");
+localStorage.removeItem("darkMode");
+console.log("After clearing:", localStorage.getItem("schedule"));
+location.reload(); 
+    window.location.href = "login.html";
+  }
+</script>
+
+  <footer class="footer">
+    &copy; 2025 All Right Saved - FCI-Menofia University
+  </footer>
+</body>
+</html>

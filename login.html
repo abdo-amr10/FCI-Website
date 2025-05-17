@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | FCI Menoufia University</title>
+  <link rel="icon" href="images/fci.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 3rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("images/FCI-MU.jpg") no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(5px);
+      z-index: -1;
+    }
+
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      border-radius: 1rem;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .header img {
+      width: 90px;
+      height: auto;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      background-color: white;
+      border-radius: 1rem;
+      padding: 2.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .welcome-text {
+      flex: 1;
+      padding-right: 2rem;
+      text-align: left;
+    }
+
+    .welcome-text h1 {
+      font-size: 2.5rem;
+      color: #4ba3c7;
+      margin-bottom: 1rem;
+      animation: typing 3.5s steps(30, end) forwards;
+      border-right: 2px solid #4ba3c7;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+    }
+
+    .welcome-text p {
+      font-size: 1rem;
+      color: #555;
+      margin-top: 1rem;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    .login-box {
+      flex: 1;
+      max-width: 350px;
+      text-align: center;
+    }
+
+    .login-box h2 {
+      font-size: 1.6rem;
+      color: #222;
+      margin-bottom: 0.3rem;
+    }
+
+    .login-box h4 {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #666;
+      margin-bottom: 1.8rem;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+      font-size: 0.95rem;
+      transition: border 0.2s ease;
+    }
+
+    .login-box input:focus {
+      border-color: #4ba3c7;
+      outline: none;
+      background-color: #fff;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #4ba3c7;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-box button:hover {
+      background-color: #398cb0;
+    }
+    
+    .error {
+      color: #d00000;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        padding: 2rem;
+      }
+      .welcome-text {
+        text-align: center;
+        padding-right: 0;
+        margin-bottom: 2rem;
+      }
+      .welcome-text h1 {
+        font-size: 2rem;
+        border-right: none;
+        width: 100%;
+      }}
+
+      .header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem; /* بدل 2rem */
+}
+.header-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: none;           /* شيل الإطار */
+  border-radius: 0;       /* شيل الحواف الدائرية */
+}
+.separator {
+  width: 1.5px;         /* أرفع */
+  height: 80px;
+  background-color: black;
+  border-radius: 0;     /* شيل الحواف */
+  box-shadow: none;     /* شيل الظل */
+}
+
+    
+  </style>
+</head>
+<body>
+
+  <!-- Header with only logos -->
+
+  <div class="header">
+    <img src="images/fci.png" class="header-image" alt="Faculty Logo">
+    <div class="separator"></div>
+    <img src="images/menofia.png" class="header-image" alt="University Logo">
+  </div>
+  
+  <div class="container">
+    <div class="welcome-text">
+      <h1>Welcome to FCI</h1>
+      <p>Empowering future innovators through knowledge and technology.</p>
+    </div>
+    <div class="login-box">
+      <h2>Menoufia University</h2>
+      <h4>Faculty of Computers and Information</h4>
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+      <button type="button" onclick="login(event)">Login</button>
+      <p id="error-msg" style="color: red;"></p>
+  
+    </div>
+  </div>
+
+  <script>
+    function login(event) {
+      event.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+    
+      if (email === "student@menofia.edu.eg" && password === "123456") {
+        localStorage.setItem("isLoggedIn", "true");  // ✅ حفظ حالة الدخول
+        window.location.href = "index.html";         // ✅ الانتقال لصفحة الجدول مثلاً
+      } else {
+        document.getElementById("error-msg").innerText = "Invalid email or password.";
+      }
+    }
+    </script>
+    
+</body>
+</html>

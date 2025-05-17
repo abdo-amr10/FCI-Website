@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard</title>
+  <link rel="icon" href="images/fci.png" type="image/png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+ <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+ <script>
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+      window.location.href = "login.html";
+    }
+  </script>
+  
+  <style>
+/* إعدادات عامة */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+
+body {
+  background-image: url("images/back3.jpg"); /* استبدل باسم الصورة أو رابطها */
+    background-size: cover; /* تغطية الشاشة بالكامل */
+    background-repeat: no-repeat; /* عدم تكرار الصورة */
+    background-position: center center; /* توسيط الصورة */
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+
+.container {
+  width: 100%;
+  padding: 0 1rem;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 310px 3fr 310px;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+aside, .right, main {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.subjects, .timetable, .professors {
+  margin-bottom: 2rem;
+}
+
+.section-header {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.subject {
+  border-radius: 12px;
+  padding: 1rem;
+  color: #fff;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 200px;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  margin-top: 20px;
+}
+
+.subject:hover {
+  transform: translateY(-5px);
+}
+
+.subject i {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.progress-circle {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.subject.os { background: linear-gradient(135deg, #6a11cb, #2575fc); }
+.subject.web { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
+.subject.net { background: linear-gradient(135deg, #11998e, #38ef7d); }
+.subject.data { background: linear-gradient(135deg, #f7971e, #ffd200); }
+.subject.prog { background: linear-gradient(135deg, #8e2de2, #4a00e0); }
+.subject.model { background: linear-gradient(135deg, #fc4a1a, #f7b733); }
+
+.right div, .professors div, .timetable-box div {
+  background-color: #f0f0f0;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.right div:hover, .professors div:hover, .timetable-box div:hover {
+  background-color: #e0e0e0;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #fff;
+  margin-top: 2rem;
+}
+
+.theme-toggler {
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.bottom-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 4fr 330px;
+  gap: 1.5rem;
+  padding: 2rem 0;
+}
+
+.timetable-box {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: fit-content;
+  margin-left: -1rem;
+}
+
+.timetable-box div {
+  padding: 0.8rem;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s;
+}
+
+.timetable-box div:hover {
+  background-color: #e0e0e0;
+}
+
+.timetable-box div:last-child {
+  margin-bottom: 0;
+}
+
+.professors {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  width: 330px;
+  margin-left: 0.5rem;
+}
+
+.header-info-container {
+  max-width: 100%;
+  padding: 0 2rem;
+  margin-top: -5rem;
+}
+
+.header-info {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-info .dean,
+.header-info .vice-dean {
+  font-size: 1rem;
+  color: #444;
+}
+
+.header-info .actions a {
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  margin-left: 1rem;
+  background-color: #2a7faa;
+  color: #fff;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.header-info .actions a:hover {
+  background-color: #1d64b8;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 0.76rem 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-radius: 10px;
+  width: 98%;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+header .logo img {
+  width: 34px;
+  height: 34px;
+}
+
+header .logo h2 {
+  font-size: 20px;
+  color: #333;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-right: 2rem;
+  margin-left: auto;
+  height: 40px; 
+}
+
+.navbar a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.3s ease;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar a:hover {
+  background-color: #f3f3f3;
+}
+
+.navbar a span {
+  font-size: 18px;
+}
+
+.navbar a h3 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.theme-toggler {
+  cursor: pointer;
+  display: flex;
+align-items: center;
+gap: 8px;
+font-size: 28px;
+}
+/* تخصيص الخلفية لكل زرار في الوضع الليلي فقط */
+/* الوضع الداكن */
+
+body.dark {
+  background-color: #121212; /* خلفية الوضع الليلي */
+  color: #e0e0e0; /* نص الوضع الليلي */
+}
+
+body.dark header,
+body.dark aside,
+body.dark .right,
+body.dark main,
+body.dark .timetable-box,
+body.dark .professors,
+body.dark .header-info,
+body.dark .footer,
+body.dark .navbar {
+  background-color: #1e1e2f !important; /* خلفية داكنة لكل العناصر */
+  color: #e0e0e0; /* نص فاتح داخل العناصر الداكنة */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* إضافة الظلال */
+}
+
+/* النصوص الداخلية */
+body.dark .section-header,
+body.dark .header-info .dean,
+body.dark .header-info .vice-dean,
+body.dark .logo h2,
+body.dark .navbar a {
+  color: #f5f5f5; /* لون النص الفاتح */
+}
+
+/* الروابط في النافبار */
+body.dark .navbar a {
+  color: #e0e0e0; /* لون النص في الروابط */
+  background-color: #2f3e46 !important;
+}
+
+body.dark .navbar a:hover {
+  filter: brightness(1.1); /* تأثير hover */
+}
+
+/* مربعات مثل المواد والجدول */
+body.dark .right div,
+body.dark .professors div,
+body.dark .timetable-box div {
+  background-color: #2a2a3d; /* خلفية داكنة للمربعات */
+  color: #ddd; /* نص فاتح داخل المربعات */
+}
+
+body.dark .right div:hover,
+body.dark .professors div:hover,
+body.dark .timetable-box div:hover {
+  background-color: #3a3a50; /* تفاعل عند التمرير */
+}
+
+/* الأيقونات */
+body.dark .material-icons-sharp {
+  color: #f5f5f5; /* تغيير اللون الأبيض للأيقونات */
+}
+
+/* الأزرار */
+body.dark .header-info .actions a {
+  background-color: #2575fc; /* زر أزرق */
+  color: #fff; /* نص أبيض على الزر */
+}
+
+body.dark .header-info .actions a:hover {
+  background-color: #1a5fd0; /* تفاعل عند التمرير */
+}
+
+/* تخصيص الألوان التفاعلية */
+body.dark .theme-toggler {
+  cursor: pointer; /* المؤشر كيد عند الوقوف على الزر */
+  display: flex;
+  align-items: center;
+  gap: 8px; /* المسافة بين الأيقونات */
+  font-size: 28px;
+}
+
+/* تخصيص الألوان للأيقونات الشمسية والقمرية */
+body.dark .sun-icon {
+  display: none;
+}
+
+body.dark .moon-icon {
+  display: inline-block;
+  color: #f5f5f5; /* لون القمر في الوضع الداكن */
+}
+
+/* تخصيص تأثيرات التبديل بين الوضعين */
+body:not(.dark) .sun-icon {
+  display: inline-block;
+  color: #ffcc00; /* لون الشمس في الوضع النهاري */
+}
+
+body:not(.dark) .moon-icon {
+  display: none;
+}
+
+/* تحسين خلفية الهيدر في الوضع الداكن */
+body.dark header {
+  background-color: #2c2c3d; /* خلفية داكنة */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.4); /* ظلال داكنة */
+}
+
+/* تحسين اللوجو في الوضع الداكن */
+body.dark .logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+body.dark .logo h2 {
+  color: #f5f5f5; /* تغيير لون النص إلى أبيض */
+}
+
+  </style>
+</head>
+<body>
+    <header>
+      <div class="logo">
+        <img src="./images/fci.png" alt="Logo">
+        <h2>FCI</h2>
+      </div>
+      <div class="navbar">
+        <a href="index.html"  >
+          <span class="material-icons-sharp">home</span>
+          <h3>Home</h3>
+        </a>
+        <a href="timetable.html"  onclick="timeTableAll() ">
+          <span class="material-icons-sharp">today</span>
+          <h3>Time Table</h3>
+        </a>
+        <a href="Results.html">
+          <span class="material-icons-sharp">grid_view</span>
+          <h3>Exam Results</h3>
+        </a>
+        <a href="resetpassword.html"  >
+          <span class="material-icons-sharp">lock</span>
+          <h3>Change Password</h3>
+        </a>
+        <a href="#" onclick="logout(); return false;">
+          <span class="material-icons-sharp" id="logoutButton">logout</span>
+          <h3>Logout</h3>
+        </a>
+        
+      </div>
+      <div class="theme-toggler" onclick="toggleDarkMode()">
+        <span class="material-icons-sharp moon-icon">dark_mode</span>
+        <span class="material-icons-sharp sun-icon">light_mode</span>
+      </div>
+      
+    
+    
+    </header>
+  
+    
+    <div class="container">
+        <aside>
+          <div class="profile" >
+            <div class="profile-photo" style="margin-top: 1rem;">
+              <!-- تحديث الصورة هنا باستخدام المسار الجديد -->
+              <img src="images/me.jpg.jpg" alt="Student Photo" style="width: 80px; border-radius: 50%;  width: 120px;
+              border-radius: 10px;
+              object-fit: cover;
+              border: 4px solid #00ffea;
+              margin-bottom: 10px;
+              margin-left: 20px;"/>
+            </div>
+            <div class="info" style="margin-top: 1.3rem;">
+              <!-- إضافة margin-bottom لزيادة المسافة بين البيانات -->
+              <p style="margin-bottom: 1rem;"><strong>Name:</strong> Abd El-Rahman</p>
+              <p style="margin-bottom: 1rem;"><strong>ID:</strong> 12102030</p>
+              <p style="margin-bottom: 1rem;"><strong>Email:</strong> abdelrahman@ci.menofia.edu.eg</p>
+              <p style="margin-bottom: 1rem;"><strong>GPA:</strong> 3.8</p>
+              <p style="margin-bottom: 1rem;"><strong>Address:</strong>  Shebeen El-Kom, Menoufia</p>
+              <p style="margin-bottom: 1rem;"><strong>Date of Birth:</strong> 01/10/2005</p>
+              <p style="margin-bottom: 1rem;"><strong>Year:</strong> 2nd Year</p>
+              <p style="margin-bottom: 1rem;"><strong>Registered Hours:</strong> 1 hours</p>
+              <p style="margin-bottom: 1rem;"><strong>Department:</strong> Computer Science</p>
+            </div>
+          </div>
+        </aside>
+
+  
+      <main>
+        <h1>Welcome back, Abd El-Rahman</h1>
+        <div class="subjects">
+          <p class="section-header">Subjects & Attendance</p>
+          <div class="subjects-grid">
+            <div class="subject os"><i class="material-icons-sharp">computer</i>
+              <h3>OS</h3><p>24/28 Attendance</p><div class="progress-circle">86%</div>
+            </div>
+            <div class="subject web"><i class="material-icons-sharp">language</i>
+              <h3>Web Design</h3><p>22/25 Attendance</p><div class="progress-circle">88%</div>
+            </div>
+            <div class="subject net"><i class="material-icons-sharp">network_wifi</i>
+              <h3>Network-1</h3><p>19/22 Attendance</p><div class="progress-circle">86%</div>
+            </div>
+            <div class="subject data"><i class="material-icons-sharp">storage</i>
+              <h3>Data Structures</h3><p>27/30 Attendance</p><div class="progress-circle">90%</div>
+            </div>
+            <div class="subject prog"><i class="material-icons-sharp">code</i>
+              <h3>Programming-2</h3><p>25/29 Attendance</p><div class="progress-circle">86%</div>
+            </div>
+            <div class="subject model"><i class="material-icons-sharp">timeline</i>
+              <h3>Modeling & Simulation</h3><p>23/26 Attendance</p><div class="progress-circle">88%</div>
+            </div>
+          </div>
+        </div>
+      </main>
+  
+      <div class="right">
+        <h2>Announcements</h2>
+        <div style="margin-top: 1rem;"><p><strong>Internship:</strong> Apply before 10 May.</p></div>
+        <div><p><strong>Exams:</strong> Midterms begin next week.</p></div>
+      </div>
+    </div>
+  
+    <div class="bottom-section">
+      <!-- جدول المواد اليومية -->
+      <div class="timetable-box">
+        <p class="section-header">Today's Timetable</p>
+        <div><strong>OS</strong> — 10:00 AM @ Lab 1</div>
+        <div><strong>OS</strong> — 02:00 PM @ Lab 2</div>
+        <div><strong>Web Design</strong> — 12:00 PM @ Lab 3</div>
+        <div><strong>Web Design</strong> — 02:30 PM @ Lab 4</div>
+      </div>
+    
+      <!-- جدول الدكاترة -->
+      <div class="professors">
+        <p class="section-header">Professors</p>
+        <div><span>Dr. Ashraf</span> <span>: OS</span></div>
+        <div><span>Dr. Shaimaa</span> <span>: Web Design</span></div>
+        <div><span>Dr. Amina</span> <span>: Network-1</span></div>
+        <div><span>Dr. Afaf</span> <span>: Data Structures</span></div>
+        <div><span>Dr. Afaf</span> <span>: Programming-2</span></div>
+        <div><span>Dr. Gamal</span> <span>: Modeling & Simulation</span></div>
+      </div>
+    
+      <!-- حاوية العميد -->
+      <div class="header-info-container">
+        <div class="header-info">
+          <div class="dean">
+            <p><strong>Dean:</strong> Dr. Hatem Sayed</p>
+          </div>
+          <div class="vice-dean">
+            <p><strong>Vice Dean:</strong> Dr. Hamdy Mousa</p>
+          </div>
+          <div class="actions">
+            <a href="results.html" class="btn">View Results</a>
+            <a href="timetable.html" class="btn">Register Schedule</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  
+    <footer class="footer">
+      &copy; 2025 All Right Saved - FCI-Menofia University
+    </footer>
+  
+    <script>
+
+function toggleDarkMode() {
+  document.body.classList.toggle('dark');
+}
+if (localStorage.getItem("darkMode") === "enabled") {
+    document.body.classList.add("dark");
+  }
+
+  function toggleDarkMode() {
+    // التبديل بين الوضع الداكن والعادي
+    document.body.classList.toggle("dark");
+
+    // حفظ حالة الوضع في LocalStorage
+    if (document.body.classList.contains("dark")) {
+      localStorage.setItem("darkMode", "enabled");
+    } else {
+      localStorage.removeItem("darkMode");
+    }
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+  // التحقق إذا كان المستخدم قد قام بتسجيل الدخول
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+  window.location.replace("login.html");
+}
+
+
+  // منع الرجوع إلى الصفحة السابقة باستخدام التاريخ
+  if (window.history && window.history.pushState) {
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function () {
+      window.history.pushState(null, null, window.location.href);
+    };
+  }
+});
+
+// دالة لتسجيل الخروج، تقوم بإزالة حالة تسجيل الدخول
+
+
+
+  function logout() {
+    localStorage.removeItem("isLoggedIn");
+
+    // حذف الكاش عشان الصفحة ما تفضلش محفوظة
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (let name of names)
+          caches.delete(name);
+      });
+    }
+
+    // منع الرجوع بزر back
+    history.pushState(null, null, location.href);
+    window.addEventListener("popstate", function () {
+      history.pushState(null, null, location.href);
+    });
+
+ 
+    localStorage.removeItem("isLoggedIn");
+
+// منع الرجوع بالباك، عن طريق استبدال الصفحة الحالية (مفيش صفحة يرجع لها)
+window.location.replace("login.html");
+  }
+
+
+
+  document.getElementById("logoutButton").addEventListener("click", logout);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") || sessionStorage.getItem("isLoggedIn");
+    
+    if (!isLoggedIn) {
+      // لو مش مسجل دخول يرجّعه للوج إن
+      window.location.replace("login.html");
+    }
+
+    // منع الرجوع للصفحة دي بزر الرجوع
+    if (window.history && window.history.pushState) {
+      window.history.pushState(null, null, window.location.href);
+      window.onpopstate = function () {
+        window.history.pushState(null, null, window.location.href);
+      };
+    }
+  });
+  document.addEventListener("DOMContentLoaded", function () {
+    // التحقق من تسجيل الدخول
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+      window.location.replace("login.html");
+    }
+
+    // منع الرجوع بزر الباك
+    history.pushState(null, null, location.href);
+    window.addEventListener("popstate", function () {
+      history.pushState(null, null, location.href);
+    });
+  });
+    </script>
+  
+    <script>
+      checkAuth(); // نفذ التحقق تلقائيًا عند تحميل الصفحة
+    </script>
+   <script>  
+    if (!localStorage.getItem("isLoggedIn")) {
+      alert("Not logged in! Redirecting...");
+      console.log("Before clearing:", localStorage.getItem("schedule"));
+  localStorage.removeItem("schedule");
+  localStorage.removeItem("darkMode");
+  console.log("After clearing:", localStorage.getItem("schedule"));
+  location.reload(); 
+      window.location.href = "login.html";
+    }
+  </script>
+  
+  </body>
+  
+</html>
