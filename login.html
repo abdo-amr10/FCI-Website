@@ -184,7 +184,7 @@
 
 @media (max-width: 768px) {
   .container {
-    flex-direction: row;
+    flex-direction: column;
     padding: 2rem 1rem;
   }
 
@@ -196,21 +196,21 @@
 
   .welcome-text h1 {
     font-size: 1.8rem;
-    animation: none;         /* ✅ وقف الـ typing animation */
-    border: none;            /* ✅ شيل البوردر */
-    white-space: normal;     /* ✅ خليه يلف عادي */
+    border-right: none;
+    white-space: normal;
     overflow: visible;
     width: auto;
   }
 
   .header {
-    flex-direction: row;
+    /* خليها صف (row) مش عمود */
+    flex-direction: row;  /* لو مش حابب تكتبها، ممكن تحذف السطر دا */
     gap: 1rem;
     padding: 1rem;
   }
 
-   .header-image {
-    width: auto; 
+  .header-image {
+    width: 60px;  /* قللت الحجم */
     height: auto;
   }
 
@@ -227,13 +227,14 @@
     font-size: 1rem;
     padding: 0.8rem;
   }
-}
-  html, body {
+    html, body {
     height: auto;
     min-height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
   }
+}
+
   
   </style>
 </head>
