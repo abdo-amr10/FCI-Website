@@ -158,21 +158,52 @@
       margin-top: 0.5rem;
     }
 
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        padding: 2rem;
-      }
-      .welcome-text {
-        text-align: center;
-        padding-right: 0;
-        margin-bottom: 2rem;
-      }
-      .welcome-text h1 {
-        font-size: 2rem;
-        border-right: none;
-        width: 100%;
-      }}
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 2rem 1rem;
+  }
+
+  .welcome-text {
+    text-align: center;
+    padding-right: 0;
+    margin-bottom: 2rem;
+  }
+
+  .welcome-text h1 {
+    font-size: 1.8rem;
+    border-right: none;
+    white-space: normal;
+    overflow: visible;
+    width: auto;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .header-image {
+    width: 80px;
+    height: auto;
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .login-box {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .login-box input, .login-box button {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+}
+
 
       .header {
   display: flex;
