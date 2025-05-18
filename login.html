@@ -192,6 +192,10 @@
     text-align: center;
     padding-right: 0;
     margin-bottom: 2rem;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .welcome-text h1 {
@@ -203,14 +207,13 @@
   }
 
   .header {
-    /* خليها صف (row) مش عمود */
-    flex-direction: row;  /* لو مش حابب تكتبها، ممكن تحذف السطر دا */
+    flex-direction: row;
     gap: 1rem;
     padding: 1rem;
   }
 
   .header-image {
-    width: 60px;  /* قللت الحجم */
+    width: 60px;
     height: auto;
   }
 
@@ -220,20 +223,25 @@
 
   .login-box {
     width: 100%;
-    max-width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .login-box input, .login-box button {
+  .login-box input,
+  .login-box button {
     font-size: 1rem;
     padding: 0.8rem;
   }
-    html, body {
+
+  html, body {
     height: auto;
     min-height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
   }
 }
+
 
   
   </style>
