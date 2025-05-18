@@ -25,7 +25,7 @@
       padding-right: 1rem;
       padding-bottom: 2rem;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     body::before {
@@ -69,6 +69,7 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
       width: 100%;
       max-width: 900px;
+      flex-wrap: wrap;
     }
 
     .welcome-text {
@@ -181,7 +182,7 @@
   box-shadow: none;     /* شيل الظل */
 }
 
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
   .container {
     flex-direction: column;
     padding: 2rem 1rem;
@@ -195,8 +196,9 @@
 
   .welcome-text h1 {
     font-size: 1.8rem;
-    border-right: none;
-    white-space: normal;
+    animation: none;         /* ✅ وقف الـ typing animation */
+    border: none;            /* ✅ شيل البوردر */
+    white-space: normal;     /* ✅ خليه يلف عادي */
     overflow: visible;
     width: auto;
   }
@@ -226,6 +228,7 @@
     padding: 0.8rem;
   }
 }
+
   
   </style>
 </head>
